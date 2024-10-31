@@ -4,13 +4,17 @@ import {
   useRouteError,
   isRouteErrorResponse,
 } from '@remix-run/react';
-import {queryClient} from '~/services/client';
 import {useDehydratedState} from 'use-dehydrated-state';
+import {HydrationBoundary} from '@tanstack/react-query';
+
+import {queryClient} from '~/services/client';
+
 import Layout from '~/global/components/mui/layout';
 import {MuiDocument} from '~/global/components/mui/document';
+
 import {Language} from '~/localization/resource';
+
 import {useQueryProfile} from './services/auth';
-import {HydrationBoundary} from '@tanstack/react-query';
 
 //
 //

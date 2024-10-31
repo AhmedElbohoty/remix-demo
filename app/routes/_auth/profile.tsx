@@ -2,7 +2,6 @@ import type {MetaFunction} from '@remix-run/node';
 import {Form, redirect, useLoaderData} from '@remix-run/react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useMutation} from '@tanstack/react-query';
 import {useTranslation} from 'react-i18next';
 import {useSnackbar} from 'notistack';
 import * as yup from 'yup';

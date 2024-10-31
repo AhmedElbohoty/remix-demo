@@ -1,10 +1,14 @@
-import {Box, Grid2, Stack, Typography} from '@mui/material';
-import {useQueryCategoriesList} from '~/services/categories';
-import {AppButton} from '~/global/components/app-button';
-import {CategoriesTable} from './components/table';
 import type {MetaFunction} from '@remix-run/node';
 import {redirect} from '@remix-run/react';
 import {useTranslation} from 'react-i18next';
+
+import {Box, Grid2, Stack, Typography} from '@mui/material';
+
+import {useQueryCategoriesList} from '~/services/categories';
+
+import {AppButton} from '~/global/components/app-button';
+
+import {CategoriesTable} from './components/table';
 
 //
 //
