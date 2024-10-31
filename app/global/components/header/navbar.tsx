@@ -25,6 +25,7 @@ import {useI18nNavigate} from '~/global/hooks/use-i18n-navigate';
 import {useMatchLocation} from '~/global/hooks/use-match-location';
 
 import {ApiUser} from '~/api-client/types';
+import {apiProfileGetResponse} from '~/api-client';
 
 import {AppButton} from '../app-button';
 
@@ -62,7 +63,7 @@ const HeaderNavbarLinks = () => {
 
   if (isFetching) return null;
 
-  const profile = (data as any)?.result as unknown as ApiUser;
+  const profile = (data as apiProfileGetResponse | undefined)?.result as unknown as ApiUser;
 
   if (profile?.userId) return <HeaderNavbarProfile profile={profile} />;
 
