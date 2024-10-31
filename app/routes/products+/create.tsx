@@ -3,7 +3,7 @@ import {Form, redirect} from '@remix-run/react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useTranslation} from 'react-i18next';
-import {useSnackbar} from 'notistack';
+import {useSnackbar, type VariantType} from 'notistack';
 import * as yup from 'yup';
 
 import {useMutationProductsCreate} from '~/services/products';
@@ -11,6 +11,7 @@ import {useMutationProductsCreate} from '~/services/products';
 import {useI18nNavigate} from '~/global/hooks/use-i18n-navigate';
 
 import {PageShell} from '~/global/components/page-shell';
+import type {SnackOptions} from '~/global/components/snack-notification';
 
 import {ProductsForm} from './components/form';
 
@@ -79,13 +80,18 @@ export default function ProductsCreate() {
     const response = await mutate.mutateAsync({payload});
 
     if (response?.errors?.length) {
-      enqueueSnackbar({
+      const options: SnackOptions = {
         heading: response?.meta?.message,
         messages: response?.errors,
-        variant: 'error',
-      });
+        variant: 'error' as VariantType,
+      };
+      enqueueSnackbar(options);
     } else if (response?.result?.productId) {
-      enqueueSnackbar({messages: response.meta?.message, variant: 'success'});
+      const options: SnackOptions = {
+        messages: response.meta?.message,
+        variant: 'success' as VariantType,
+      };
+      enqueueSnackbar(options);
       navigate('/products', {viewTransition: true});
     }
   });

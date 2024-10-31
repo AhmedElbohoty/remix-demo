@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import {useSnackbar} from 'notistack';
+import {useSnackbar, type VariantType} from 'notistack';
 import {formatRelative} from 'date-fns';
 
 import {
@@ -40,10 +40,11 @@ export const ProductsTable = ({data}: {data: ApiProduct[]; isLoading: boolean}) 
       {id: item.productId},
       {
         onSuccess: async result => {
-          result?.meta?.message && enqueueSnackbar(result?.meta?.message, {variant: 'success'});
+          result?.meta?.message &&
+            enqueueSnackbar(result?.meta?.message, {variant: 'success' as VariantType});
         },
         onError: err => {
-          enqueueSnackbar(err?.message || 'unknown error', {variant: 'error'});
+          enqueueSnackbar(err?.message || 'unknown error', {variant: 'error' as VariantType});
         },
       },
     );

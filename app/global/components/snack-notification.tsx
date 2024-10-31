@@ -1,5 +1,11 @@
 import React from 'react';
-import {SnackbarContent, CustomContentProps, closeSnackbar} from 'notistack';
+import {
+  SnackbarContent,
+  CustomContentProps,
+  closeSnackbar,
+  OptionsObject,
+  SnackbarMessage,
+} from 'notistack';
 
 import {AlertProps} from '@mui/material';
 
@@ -22,6 +28,12 @@ interface SnackNotificationProps extends NotificationProps {
   noClose?: boolean;
   alertProps?: AlertProps;
 }
+
+export type SnackOptions = OptionsObject<never> & {
+  message?: SnackbarMessage;
+  heading?: React.ReactNode;
+  messages: React.ReactNode | React.ReactNode[];
+};
 
 //
 

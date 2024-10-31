@@ -3,7 +3,7 @@ import {Form, redirect, useLoaderData} from '@remix-run/react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useTranslation} from 'react-i18next';
-import {useSnackbar} from 'notistack';
+import {useSnackbar, VariantType} from 'notistack';
 import * as yup from 'yup';
 
 import {queryClient} from '~/services/client';
@@ -12,6 +12,7 @@ import {useQueryProfile, useMutationProfileUpdate} from '~/services/auth';
 import {PageShell} from '~/global/components/page-shell';
 import {AppInputPassword} from '~/global/components/app-input-password';
 import {AppInput} from '~/global/components/app-input';
+import type {SnackOptions} from '~/global/components/snack-notification';
 
 //
 //
@@ -62,13 +63,18 @@ export default function Profile() {
     const response = await mutate.mutateAsync({payload});
 
     if (response?.errors?.length) {
-      enqueueSnackbar({
+      const options: SnackOptions = {
         heading: response?.meta?.message,
         messages: response?.errors,
-        variant: 'error',
-      });
+        variant: 'error' as VariantType,
+      };
+      enqueueSnackbar(options);
     } else if (response?.result?.userId) {
-      enqueueSnackbar({messages: 'Profile updated successfully', variant: 'success'});
+      const options: SnackOptions = {
+        messages: 'Profile updated successfully',
+        variant: 'success' as VariantType,
+      };
+      enqueueSnackbar(options);
     }
   });
 
