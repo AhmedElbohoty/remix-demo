@@ -3,6 +3,8 @@ import {useSnackbar, type VariantType} from 'notistack';
 import {formatRelative} from 'date-fns';
 
 import {
+  useMediaQuery,
+  useTheme,
   Box,
   Button,
   Paper,
@@ -23,13 +25,40 @@ import {AppButton} from '~/global/components/app-button';
 
 import {ApiProduct} from '~/api-client/types';
 
+import {ProductCard} from './product_card';
+
 //
 //
+
+// Add at the top of file after imports
+const STYLES = {
+  // Table styles
+  table: {
+    minWidth: 650,
+  },
+  tableRow: {
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  },
+  tableCellTitle: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: '2',
+    WebkitBoxOrient: 'vertical',
+  },
+  activeLabel: {
+    ml: 1,
+  },
+};
 
 export const ProductsTable = ({data}: {data: ApiProduct[]; isLoading: boolean}) => {
   const {t} = useTranslation(['products', 'common']);
   const {enqueueSnackbar} = useSnackbar();
   const deleteItem = useMutationProductsDelete();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down(700));
 
   //
 
@@ -53,9 +82,19 @@ export const ProductsTable = ({data}: {data: ApiProduct[]; isLoading: boolean}) 
   //
   //
 
+  if (isMobile) {
+    return (
+      <Stack spacing={2}>
+        {data?.map(row => (
+          <ProductCard key={row.productId} row={row} doDeleteItem={doDeleteItem} />
+        ))}
+      </Stack>
+    );
+  }
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{minWidth: 650}}>
+      <Table sx={STYLES.table}>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -101,25 +140,15 @@ const ProductTableRow: React.FC<ProductTableRowProps> = ({
   const {t} = useTranslation(['products', 'common']);
 
   return (
-    <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+    <TableRow sx={STYLES.tableRow}>
       <TableCell component="th" scope="row">
-        <Box
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
-            WebkitLineClamp: '2',
-            WebkitBoxOrient: 'vertical',
-          }}
-        >
-          {row.title.en || row.title.ar}
-        </Box>
+        <Box sx={STYLES.tableCellTitle}>{row.title.en || row.title.ar}</Box>
         <Box>
           <Typography variant="caption" color="textDisabled">
             {row.sku || '---'} | {row.quantity || '---'}
           </Typography>
           {row.isActive ? (
-            <Typography variant="caption" color="success" ml={1}>
+            <Typography variant="caption" color="success" sx={STYLES.activeLabel}>
               {t('common:active')}
             </Typography>
           ) : null}
