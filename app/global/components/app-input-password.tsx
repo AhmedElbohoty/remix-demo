@@ -15,6 +15,7 @@ export const AppInputPassword = (props: AppInputProps) => {
     <AppInput
       {...props}
       type={toggle.value ? 'text' : 'password'}
+      autoComplete="new-password"
       slotProps={{
         input: {
           endAdornment: (

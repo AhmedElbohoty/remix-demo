@@ -87,9 +87,15 @@ export default function Profile() {
     <FormProvider {...form}>
       <Form method="post" onSubmit={onSubmit}>
         <PageShell title={t('auth:profile.title')} backTo="/" isLoading={isLoading}>
-          <AppInput name="name" label={t('common:name')} variant="filled" />
+          <AppInput name="name" label={t('common:name')} variant="filled" autoComplete="username" />
 
-          <AppInput name="email" type="email" label={t('common:email')} variant="filled" />
+          <AppInput
+            name="email"
+            type="email"
+            label={t('common:email')}
+            variant="filled"
+            autoComplete="email"
+          />
 
           <AppInput name="mobile" type="tel" label={t('common:mobile')} variant="filled" />
 

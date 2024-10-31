@@ -90,7 +90,13 @@ export default function SignIn() {
           backTo="/sign-up"
           isLoading={isLoading}
         >
-          <AppInput name="email" type="email" label={t('common:email')} variant="filled" />
+          <AppInput
+            name="email"
+            type="email"
+            label={t('common:email')}
+            variant="filled"
+            autoComplete="email"
+          />
 
           <AppInputPassword name="password" label={t('common:password')} variant="filled" />
         </PageShell>

@@ -95,11 +95,23 @@ export default function SignUp() {
           backTo="/sign-in"
           isLoading={isLoading}
         >
-          <AppInput name="name" label={t('common:name')} variant="filled" />
+          <AppInput name="name" label={t('common:name')} variant="filled" autoComplete="username" />
 
-          <AppInput name="email" type="email" label={t('common:email')} variant="filled" />
+          <AppInput
+            name="email"
+            type="email"
+            label={t('common:email')}
+            variant="filled"
+            autoComplete="email"
+          />
 
-          <AppInput name="mobile" type="tel" label={t('common:mobile')} variant="filled" />
+          <AppInput
+            name="mobile"
+            type="tel"
+            label={t('common:mobile')}
+            variant="filled"
+            autoComplete="mobile"
+          />
 
           <AppInputPassword name="password" label={t('common:password')} variant="filled" />
 
