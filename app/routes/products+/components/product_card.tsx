@@ -1,3 +1,6 @@
+import {useTranslation} from 'react-i18next';
+import {formatRelative} from 'date-fns';
+
 import {useMediaQuery, useTheme, Box, Button, Paper, Stack, Typography} from '@mui/material';
 import {DeleteOutline, EditOutlined} from '@mui/icons-material';
 
@@ -29,8 +32,8 @@ const STYLES = {
   },
   activeIndicator: {
     position: 'absolute',
-    right: '-10px',
-    top: '-10px',
+    left: '-16px',
+    top: '-12px',
     display: 'inline-block',
     width: 32,
     height: 32,
@@ -39,7 +42,7 @@ const STYLES = {
     ml: 1,
     borderColor: 'white',
     borderStyle: 'solid',
-    borderWidth: 8,
+    borderWidth: 6,
   },
   cardDescription: {
     mb: 2,
@@ -79,11 +82,24 @@ const STYLES = {
     position: 'relative',
     paddingRight: '20px',
   },
+
+  datel: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
+
+  dater: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
 };
 
 type ProductTableRowProps = {row: ApiProduct; doDeleteItem: (item: ApiProduct) => void};
 
 export const ProductCard = ({row, doDeleteItem}: ProductTableRowProps) => {
+  const {t} = useTranslation(['products', 'common']);
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down(360));
 
@@ -111,19 +127,37 @@ export const ProductCard = ({row, doDeleteItem}: ProductTableRowProps) => {
                 {row.description?.en || row.description?.ar || 'No description available'}
               </Typography>
             </Box>
-            <Typography variant="h6" color="primary" component="div">
-              ${Number(row.price).toLocaleString()}
+            <Typography variant="h6" color="primary" component="div" sx={{whiteSpace: 'nowrap'}}>
+              ${Number(row.price).toLocaleString()} /{' '}
+              <Typography variant="caption" color="textDisabled" sx={{fontSize: 16}}>
+                {row?.priceSale ? '$' + Number(row.priceSale).toLocaleString() : '---'}
+              </Typography>
             </Typography>
           </Box>
 
-          <Box sx={STYLES.cardActions}>
-            <Button variant="contained" sx={STYLES.deleteButton} onClick={() => doDeleteItem(row)}>
-              {isSmall ? <DeleteOutline /> : 'Delete Product'}
-            </Button>
+          <Box sx={{display: 'flex', justifyContent: 'space-between', mb: 3}}>
+            <Box sx={STYLES.dater}>
+              <Typography variant="body2">{t('common:createdAt')}</Typography>
+              <Typography variant="subtitle2">
+                {formatRelative(new Date(row.createdAt), new Date())}
+              </Typography>
+            </Box>
+            <Box sx={STYLES.datel}>
+              <Typography variant="body2">{t('common:updatedAt')}</Typography>
+              <Typography variant="subtitle2">
+                {formatRelative(new Date(row.createdAt), new Date())}
+              </Typography>
+            </Box>
+          </Box>
 
+          <Box sx={STYLES.cardActions}>
             <AppButton to={`/products/${row.productId}`} variant="contained" sx={STYLES.editButton}>
-              {isSmall ? <EditOutlined /> : 'Edit Product'}
+              {isSmall ? <EditOutlined /> : t('products:title:edit')}
             </AppButton>
+
+            <Button variant="contained" sx={STYLES.deleteButton} onClick={() => doDeleteItem(row)}>
+              {isSmall ? <DeleteOutline /> : t('products:title:delete')}
+            </Button>
           </Box>
         </Box>
       </Stack>

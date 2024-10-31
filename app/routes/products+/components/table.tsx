@@ -30,9 +30,7 @@ import {ProductCard} from './product_card';
 //
 //
 
-// Add at the top of file after imports
 const STYLES = {
-  // Table styles
   table: {
     minWidth: 650,
   },
